@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ulangan Harian Informatika XII Fase F</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--ink:#172033;--muted:#67758a;--line:#dbe3ef;--p:#3157d5;--p2:#6d5dfc;--good:#168b61;--bad:#c73f49;--shadow:0 12px 32px rgba(29,44,72,.10)}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(135deg,#eef3ff,#fafcff 50%,#f4f7fb);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.55}
+button,input,textarea,select{font:inherit}
+.top{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.topin{max-width:1280px;margin:auto;padding:12px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{font-weight:900}.badge{padding:6px 10px;border-radius:999px;background:#eef2ff;color:var(--p);font-size:12px;font-weight:900}
+.layout{max-width:1280px;margin:auto;display:grid;grid-template-columns:265px 1fr;min-height:calc(100vh - 60px)}
+.side{position:sticky;top:61px;height:calc(100vh - 61px);padding:18px 13px;border-right:1px solid var(--line);overflow:auto}
+.side h4{margin:5px 8px 11px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.navmenu{display:grid;gap:6px}.navitem{border:1px solid transparent;background:transparent;text-align:left;border-radius:13px;padding:11px 12px;cursor:pointer;color:#354258;font-weight:700}
+.navitem:hover{background:#fff;border-color:var(--line)}.navitem.active{background:#eef2ff;color:var(--p);border-color:#cbd5ff;font-weight:900}
+.main{padding:25px 28px 120px;max-width:980px}.hero{background:linear-gradient(135deg,#1e3da9,#6d5dfc);color:#fff;border-radius:25px;padding:30px;box-shadow:var(--shadow)}
+.hero h1{margin:0 0 7px;font-size:clamp(30px,5vw,48px)}.hero p{margin:0;opacity:.94;max-width:780px}
+.screen{display:none;animation:fade .24s ease}.screen.active{display:block}@keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.section-head{margin:24px 0 13px}.kicker{display:inline-block;background:#eef2ff;color:var(--p);border-radius:999px;padding:6px 10px;font-size:11px;font-weight:900}
+h2{font-size:30px;margin:9px 0 5px}.section-head p{color:var(--muted);margin:0}
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:var(--shadow);margin-top:18px}
+.identity{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;margin-top:16px}.field label{display:block;font-size:12px;font-weight:900;color:var(--muted);margin-bottom:6px}
+.field input,.field select{width:100%;border:1.5px solid #cfd9e8;background:#fff;border-radius:12px;padding:11px 12px;outline:none}
+.startwrap{display:flex;justify-content:flex-end;margin-top:15px}.startbtn,.primary,.finishbtn{border:0;border-radius:13px;padding:12px 15px;font-weight:900;cursor:pointer;background:var(--p);color:#fff}.startbtn:disabled{opacity:.45;cursor:not-allowed}
+.secondary{border:0;border-radius:13px;padding:12px 15px;font-weight:900;cursor:pointer;background:#eef2f7;color:#2e3a4f} .editIdentity{border:1.5px solid #3157d5;border-radius:12px;padding:10px 14px;font-weight:900;cursor:pointer;background:#fff;color:#3157d5}.editIdentity:hover{background:#eef3ff}.editIdentity.hidden{display:none!important}
+.instructions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}.inst{background:#fff;border:1px solid var(--line);border-radius:16px;padding:15px}.inst .icon{font-size:24px}.inst h3{margin:5px 0;font-size:16px}
+.question{background:#fff;border:1px solid var(--line);border-radius:19px;padding:18px;box-shadow:var(--shadow);margin:15px 0}
+.qtop{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:11px;font-weight:900;color:var(--muted)}.qnum{background:#eef2ff;color:var(--p);padding:5px 8px;border-radius:999px}.qtopic{background:#f1f4f8;color:#47556a;padding:5px 8px;border-radius:999px}.points{margin-left:auto;background:#effaf5;color:#14704e;padding:5px 8px;border-radius:999px}
+.question h3{margin:10px 0 14px;font-size:17px}.answers{display:grid;gap:8px}.answer{border:1px solid var(--line);background:#fbfcff;border-radius:12px;padding:11px 12px;text-align:left;cursor:pointer}
+.answer:hover{background:#f7f9ff;border-color:#aab8d8}.answer.selected{border-color:#3157d5;background:#eef3ff;color:#1f3f9f;font-weight:800}.answer.locked{cursor:default}
+.feedback{display:none;margin-top:10px;border-radius:11px;padding:9px 12px;font-size:13px}.feedback.show{display:block}.feedback.good{background:#effaf5;color:#126a4b;border:1px solid #bfe9d5}.feedback.bad{background:#fff2f3;color:#9d3039;border:1px solid #f0c1c5}
+.qimage{background:#fbfcff;border:1px solid var(--line);border-radius:15px;padding:8px;margin:9px 0 13px}.qimage img{width:100%;max-height:310px;object-fit:contain;display:block;border-radius:10px}
+.essay textarea{width:100%;min-height:125px;resize:vertical;border:1.5px solid #cfd9e8;border-radius:13px;padding:12px;outline:none}.long textarea{min-height:210px}
+.section-nav{display:flex;justify-content:space-between;gap:10px;margin-top:22px}
+.resultbox{background:#fff;border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:var(--shadow);margin-top:18px}.scorebig{font-size:54px;font-weight:950;color:var(--p);line-height:1}
+.scoregrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:15px}.scorecard{background:#f7f9fd;border:1px solid var(--line);border-radius:15px;padding:14px}.scorecard strong{font-size:23px}
+.progressbar{height:10px;background:#e8edf5;border-radius:999px;overflow:hidden;margin-top:10px}.progressfill{height:100%;width:0;background:linear-gradient(90deg,var(--p),var(--p2));transition:.25s}
+.stickyActions{position:fixed;left:0;right:0;bottom:0;z-index:35;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-top:1px solid var(--line)}.actionsIn{max-width:1280px;margin:auto;padding:9px 18px;display:flex;gap:9px;align-items:center}.status{margin-right:auto;color:var(--muted);font-size:12px;font-weight:900}
+.call{background:#effaf5;border:1px solid #bfe9d5;border-radius:14px;padding:14px 16px;margin-top:16px}.note{font-size:12px;color:var(--muted);margin-top:6px}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.side{position:sticky;top:61px;height:auto;border-right:0;border-bottom:1px solid var(--line);background:rgba(245,247,251,.97);z-index:25}.navmenu{grid-template-columns:repeat(2,1fr)}.main{padding:20px}}
+@media(max-width:650px){.identity,.instructions,.scoregrid{grid-template-columns:1fr}.navmenu{grid-template-columns:1fr 1fr}.status{display:none}}
+@media print{.top,.side,.stickyActions,.section-nav,.startwrap{display:none!important}.layout{display:block}.main{max-width:none;padding:0}.screen{display:block!important;break-before:page}.hero{box-shadow:none}.question,.resultbox{box-shadow:none;break-inside:avoid}body{background:#fff}}
+
+<style id="reading-back-style">
+.back-reading{
+  display:block;
+  width:100%;
+  margin:0 0 8px 0;
+  border:1px solid #cbd5ff;
+  background:#eef2ff;
+  color:#3157d5;
+  text-align:left;
+  border-radius:13px;
+  padding:11px 12px;
+  cursor:pointer;
+  font-weight:900;
+  transition:.18s;
+}
+.back-reading:hover{background:#e5ebff;border-color:#9fb1f4}
+
+<style id="uh-note-style">
+.uh-warning{
+  margin:8px 0 12px;
+  padding:13px 13px 12px;
+  border-radius:14px;
+  background:#fff8e6;
+  border:1px solid #f0d18c;
+  color:#7a5700;
+  box-shadow:0 4px 12px rgba(168,111,0,.06);
+}
+.uh-warning-title{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  font-weight:950;
+  margin-bottom:6px;
+  color:#8b6200;
+}
+.uh-warning p{
+  margin:0;
+  font-size:12.5px;
+  line-height:1.55;
+}
+
+.mini-answer-count{
+  margin-top:5px;
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+}
+.print-mode .top,
+.print-mode .side,
+.print-mode .stickyActions,
+.print-mode .section-nav,
+.print-mode .startwrap,
+.print-mode .hero,
+.print-mode #sec-welcome{
+  display:none!important;
+}
+.print-mode .layout{
+  display:block!important;
+  max-width:none!important;
+}
+.print-mode .main{
+  max-width:none!important;
+  padding:0!important;
+}
+.print-mode .screen{
+  display:block!important;
+  break-before:page;
+  page-break-before:always;
+  min-height:auto!important;
+}
+.print-mode #sec-alg{break-before:auto;page-break-before:auto}
+.print-mode .question{
+  box-shadow:none!important;
+  break-inside:avoid;
+  page-break-inside:avoid;
+}
+.print-mode .answer{
+  display:none!important;
+}
+.print-mode .answer.selected{
+  display:block!important;
+  background:#eef3ff!important;
+  border:2px solid #3157d5!important;
+  color:#1f3f9f!important;
+  font-weight:800!important;
+}
+.print-mode .answers{
+  display:block!important;
+}
+.print-mode .feedback{
+  display:none!important;
+}
+.print-mode textarea{
+  border:1px solid #9aa7ba!important;
+  background:#fff!important;
+  min-height:90px!important;
+  resize:none!important;
+}
+.print-mode .qimage img{
+  max-height:260px!important;
+}
+.print-summary{
+  display:none;
+}
+.print-mode .print-summary{
+  display:block!important;
+  margin-bottom:14px;
+  padding:14px 16px;
+  border:1px solid #dbe3ef;
+  border-radius:14px;
+  background:#f7f9fd;
+}
+@media print{
+  .print-mode .screen{display:block!important}
+}
+
+
+<style id="github-api-style">
+.github-config-note{
+  margin-top:12px;padding:11px 13px;border-radius:12px;
+  background:#f2f5ff;border:1px solid #cbd5ff;color:#334778;font-size:12px;
+}
+</style>
+
+</style>
+
+</style>
+
+</style>
+</head>
+<body>
+<header class="top"><div class="topin"><div class="brand">🧠 Ulangan Harian Informatika XII — AI & Computational Problem Solving</div><div class="badge">Fase F • 30 Mini Game + 15 Essay</div></div></header>
+<div class="layout">
+<aside class="side"><h4>Navigasi Ulangan</h4><div class="navmenu">
+<button class="back-reading" id="backReading">📚 Kembali ke Materi</button>
+<div class="uh-warning">
+  <div class="uh-warning-title">⚠️ Catatan Penting</div>
+  <p>Jawaban hanya bisa dipilih <b>1 kali</b> dan <b>tidak ada pengulangan</b>. Silakan baca dan kerjakan sebaik mungkin 😊</p>
+</div>
+<button class="navitem active" data-target="sec-welcome">🏠 Beranda</button>
+<button class="navitem" data-target="sec-alg">01. Algoritma (1–5)</button>
+<button class="navitem" data-target="sec-ai">02. AI Sehari-hari (6–10)</button>
+<button class="navitem" data-target="sec-self">03. Self-Driving/IoT/ML (11–15)</button>
+<button class="navitem" data-target="sec-det">04. AI Detective (16–20)</button>
+<button class="navitem" data-target="sec-bps">05. Data BPS (21–25)</button>
+<button class="navitem" data-target="sec-prompt">06. One-Shot Prompt (26–30)</button>
+<button class="navitem" data-target="sec-short">✍️ Essay Singkat (10)</button>
+<button class="navitem" data-target="sec-long">📝 Uraian Panjang (5)</button>
+<button class="navitem" data-target="sec-result">📊 Hasil / Selesai</button></div></aside>
+<main class="main">
+<section id="sec-welcome" class="screen active">
+<div class="hero"><h1>Ulangan Harian Informatika</h1><p>Algoritma, AI, Self-Driving, IoT, Machine Learning, AI Detective, Data BPS, dan One-Shot Prompt.</p></div>
+<div class="card">
+<h2 style="margin-top:0">Pilih Nama Peserta</h2>
+<p class="note">Pilih nama terlebih dahulu. Setelah ulangan dimulai, identitas akan terkunci.</p>
+<div class="identity">
+<div class="field"><label>Nama Peserta</label><select id="studentSelect"><option value="">— Pilih nama —</option><option value="ABDUL KARIM">ABDUL KARIM</option><option value="AFIDA FAIRUS FATIN">AFIDA FAIRUS FATIN</option><option value="AGUNG SETIAWAN">AGUNG SETIAWAN</option><option value="AILSA AGRA MAYCHANA">AILSA AGRA MAYCHANA</option><option value="ANASTASIA VIERA GERNADI">ANASTASIA VIERA GERNADI</option><option value="ARDIAN CAHYO SAPUTRO">ARDIAN CAHYO SAPUTRO</option><option value="AULIA NUGRAHENI ASOKA CINTA">AULIA NUGRAHENI ASOKA CINTA</option><option value="AYUDHYA PUTRI GIOVERRY">AYUDHYA PUTRI GIOVERRY</option><option value="BINTANG">BINTANG</option><option value="DELA ALVIAH PRIANA NABILA">DELA ALVIAH PRIANA NABILA</option><option value="DIMAS FIRTA SANTAYA">DIMAS FIRTA SANTAYA</option><option value="DZIKRI DWI ANGGAKARA">DZIKRI DWI ANGGAKARA</option><option value="ELSA SETYOWATI">ELSA SETYOWATI</option><option value="FAISAL UMAR MANDALA">FAISAL UMAR MANDALA</option><option value="FARDAN ARDHIONA YUDHATAMA">FARDAN ARDHIONA YUDHATAMA</option><option value="IBNU ARIEF IKHSAN">IBNU ARIEF IKHSAN</option><option value="ILHAM MANDALATAMA WIBOWO">ILHAM MANDALATAMA WIBOWO</option><option value="INDRA SYAH PUTRA">INDRA SYAH PUTRA</option><option value="INDRIANA VALIN">INDRIANA VALIN</option><option value="KIRANA KARUNIA PUTRI">KIRANA KARUNIA PUTRI</option><option value="LUQMAN HAKIM">LUQMAN HAKIM</option><option value="MARSHA DWI SAFITRI">MARSHA DWI SAFITRI</option><option value="MICHELP YONERI">MICHELP YONERI</option><option value="MOHAMAD FAJAR PRATAMA">MOHAMAD FAJAR PRATAMA</option><option value="MUHAMAD RENDRA HARIYANTO">MUHAMAD RENDRA HARIYANTO</option><option value="NAUFAL ASYRAF RIZQULLAH">NAUFAL ASYRAF RIZQULLAH</option><option value="NAZWA RIMA PUTRI">NAZWA RIMA PUTRI</option><option value="PRADIGTA AULIA HAYUNINGTYAS">PRADIGTA AULIA HAYUNINGTYAS</option><option value="RAVADITYA ISMAWAN">RAVADITYA ISMAWAN</option><option value="SALSA NURUL FATIMAH">SALSA NURUL FATIMAH</option><option value="SANDY FEBRI SETIAWAN">SANDY FEBRI SETIAWAN</option><option value="SHAKILLA RAHMADHANI PUTRI">SHAKILLA RAHMADHANI PUTRI</option><option value="TEGAR ANGGARA SUSILO">TEGAR ANGGARA SUSILO</option><option value="VIKO REVALINO ARDYANZAH">VIKO REVALINO ARDYANZAH</option><option value="ZAHRO NUR HANIFAH">ZAHRO NUR HANIFAH</option><option value="ZULFA LAILA">ZULFA LAILA</option></select></div>
+<div class="field"><label>No. Absen</label><input id="studentNumber" readonly placeholder="Otomatis"></div>
+<div class="field"><label>Kelas</label><input value="XII / Fase F" readonly></div>
+</div>
+<div class="startwrap"><button type="button" class="editIdentity hidden" id="editIdentityBtn">✏️ Ubah Nama</button><button class="startbtn" id="startBtn" disabled>🚀 Mulai Ulangan</button></div>
+</div>
+<div class="instructions"><div class="inst"><div class="icon">🎮</div><h3>30 Mini Game</h3><p>Setiap soal objektif bernilai 2 poin.</p></div><div class="inst"><div class="icon">✍️</div><h3>10 Essay Singkat</h3><p>Jawaban ringkas, jelas, dan langsung pada konsep.</p></div><div class="inst"><div class="icon">📝</div><h3>5 Uraian Panjang</h3><p>Jelaskan proses, alasan, dan penerapan secara runtut.</p></div></div>
+</section>
+<section id="sec-alg" class="screen test-section"><div class="section-head"><span class="kicker">Algoritma &amp; Flowchart</span><h2>Algoritma &amp; Flowchart</h2><p>Jawab dengan teliti. Setiap soal mini game bernilai 2 poin.</p></div><article class="question objective" data-qid="1">
+<div class="qtop"><span class="qnum">#1</span><span class="qtopic">Algoritma &amp; Flowchart</span><span class="points">2 poin</span></div>
+<h3>Sebuah sistem parkir menetapkan: jika durasi parkir lebih dari 2 jam, tarif Rp10.000; jika tidak, Rp5.000. Struktur algoritma yang digunakan adalah…</h3><div class="answers"><button class="answer" data-correct="false">A. Sequence</button><button class="answer" data-correct="true">B. Selection</button><button class="answer" data-correct="false">C. Iteration</button><button class="answer" data-correct="false">D. Input/Output</button></div><div class="feedback" aria-live="polite"></div>
+</article><article class="question objective" data-qid="2">
+<div class="qtop"><span class="qnum">#2</span><span class="qtopic">Algoritma &amp; Flowchart</span><span class="points">2 poin</span></div>
+<h3>Simbol flowchart yang paling tepat untuk menunjukkan sebuah kondisi atau pertanyaan seperti “Nilai ≥ 75?” adalah…</h3><div class="answers"><button class="answer" data-correct="false">A. Oval</button><button class="answer" data-correct="false">B. Persegi panjang</button><button class="answer" data-correct="false">C. Jajar genjang</button><button class="answer" data-correct="true">D. Belah ketupat</button></div><div class="feedback" aria-live="polite"></div>
+</article><article class="question objective" data-qid="3">
+<div class="qtop"><span class="qnum">#3</span><span class="qtopic">Algoritma &amp; Flowchart</span><span class="points">2 poin</span></div>
+<h3>Manakah contoh algoritma yang memiliki struktur sequence?</h3><div class="answers"><button class="answer" data-correct="false">A. Jika hujan, gunakan payung.</button><button class="answer" data-correct="false">B. Ulangi membaca sampai semua halaman selesai.</button><button class="answer" data-correct="true">C. Nyalakan komputer → buka aplikasi → ketik dokumen.</button><button class="answer" data-correct="false">D. Jika password salah, akses ditolak.</button></div><div class="feedback" aria-live="polite"></div>
+</article><article class="question objective" data-qid="4">
+<div class="qtop"><span class="qnum">#4</span><span class="qtopic">Algoritma &amp; Flowchart</span><span class="points">2 poin</span></div>
+<h3>Dalam flowchart sistem login, urutan yang paling logis adalah…</h3><div class="answers"><button class="answer" data-correct="false">A. Verifikasi → Mulai → Input akun → Akses</button><button class="answer" data-correct="true">B. Mulai → Tampilkan form → Input username/password → Verifikasi → Akses/Tolak</button><button class="answer" data-correct="false">C. Input → Tolak → Verifikasi → Mulai</button><button class="answer" data-correct="false">D. Mulai → Akses → Input → Verifikasi</button></div><div class="feedback" aria-live="polite"></div>
+</article><article class="question objective" data-qid="5">
+<div class="qtop"><span class="qnum">#5</span><span class="qtopic">Algoritma &amp; Flowchart</span><span class="points">2 poin</span></div>
+<h3>Seorang siswa ingin membuat algoritma untuk menentukan kelulusan berdasarkan nilai. Langkah “jika nilai ≥ 75 maka lulus, jika tidak maka belum lulus” termasuk…</h3><div class="answers"><button class="answer" data-correct="false">A. Perulangan</button><button class="answer" data-correct="true">B. Percabangan/selection</button><button class="answer" data-correct="false">C. Input saja</button><button class="answer" data-correct="false">D. Output saja</button></div><div class="feedback" aria-live="polite"></div>
+</article><div class="section-nav"><button class="prevsec secondary">← Sebelumnya</button><button class="nextsec primary">Selanjutnya →</button></div></section><section id="sec-ai" class="screen test-section"><div class="section-head"><span class="kicker">AI di Kehidupan Sehari-hari</span><h2>AI di Kehidupan Sehari-hari</h2><p>Jawab dengan teliti. Setiap soal mini game bernilai 2 poin.</p></div><article class="question objective" data-qid="6">
+<div class="qtop"><span class="qnum">#6</span><span class="qtopic">AI di Kehidupan Sehari-hari</span><span class="points">2 poin</span></div>
+<h3>Sistem face unlock menggunakan kamera untuk mengenali pola wajah pengguna. Penggunaan AI yang paling tepat adalah…</h3><div class="answers"><button class="answer" data-correct="false">A. Aturan jam tetap</button><button class="answer" data-correct="true">B. Pengenalan pola</button><button class="answer" data-correct="false">C. Perulangan data</button><button class="answer" data-correct="false">D. Penyimpanan file</button></div><div class="feedback" aria-live="polite"></div>
+</article><article class="question objective" data-qid="7">
+<div class="qtop"><span class="qnum">#7</span><span class="qtopic">AI di Kehidupan Sehari-hari</span><span class="points">2 poin</span></div>
+<h3>Platform video mempelajari riwayat tontonan lalu memberikan rekomendasi. Rekomendasi tersebut merupakan…</h3><div class="answers"><button class="answer" data-correct="false">A. Data mentah</button><button class="answer" data-correct="true">B. Keluaran/prediksi sistem</button><button class="answer" data-correct="false">C. Sensor fisik</button><button class="answer" data-correct="false">D. Memori permanen</button></div><div class="feedback" aria-live="polite"></div>
+</article><article class="question objective" data-qid="8">
+<div class="qtop"><span class="qnum">#8</span><span class="qtopic">AI di Kehidupan Sehari-hari</span><span class="points">2 poin</span></div>
+<h3>Manakah contoh yang paling jelas menggunakan model AI untuk mengenali pola, bukan sekadar aturan tetap?</h3><div class="answers"><button class="answer" data-correct="false">A. Alarm berbunyi setelah 10 menit</button><button class="answer" data-correct="false">B. Lampu menyala pukul 18.00</button><button class="answer" data-correct="true">C. Aplikasi mengenali wajah dari kamera</button><button class="answer" data-correct="false">D. Kipas menyala saat tombol ditekan</button></div><div class="feedback" aria-live="polite"></div>
+</article><article class="question objective" data-qid="9">
+<div class="qtop"><span class="qnum">#9</span><span class="qtopic">AI di Kehidupan Sehari-hari</span><span class="points">2 poin</span></div>
+<h3>ChatGPT yang menghasilkan teks baru berdasarkan instruksi pengguna merupakan contoh…</h3><div class="answers"><button class="answer" data-correct="true">A. AI generatif</button><button class="answer" data-correct="false">B. Sensor IoT</button><button class="answer" data-correct="false">C. Flowchart</button><button class="answer" data-correct="false">D. Penyimpanan data</button></div><div class="feedback" aria-live="polite"></div>
+</article><article class="question objective" data-qid="10">
+<div class="qtop"><span class="qnum">#10</span><span class="qtopic">AI di Kehidupan Sehari-hari</span><span class="points">2 poin</span></div>
+<h3>Pernyataan yang paling tepat tentang hasil AI adalah…</h3><div class="answers"><button class="answer" data-correct="false">A. Semua hasil AI pasti benar.</button><button class="answer" data-correct="false">B. Hasil AI tidak perlu diperiksa karena berasal dari komputer.</button><button class="answer" data-correct="true">C. Hasil AI tetap perlu diperiksa, terutama untuk fakta, angka, dan sumber.</button><button class="answer" data-correct="false">D. AI selalu lebih benar daripada manusia.</button></div><div class="feedback" aria-live="polite"></div>
+</article><div class="section-nav"><button class="prevsec secondary">← Sebelumnya</button><button class="nextsec primary">Selanjutnya →</button></div></section><section id="sec-self" class="screen test-section"><div class="section-head"><span class="kicker">Self-Driving, IoT &amp; ML</span><h2>Self-Driving, IoT &amp; ML</h2><p>Jawab dengan teliti. Setiap soal mini game bernilai 2 poin.</p></div><article class="question objective" data-qid="11">
+<div class="qtop"><span class="qnum">#11</span><span class="qtopic">Self-Driving, IoT &amp; ML</span><span class="points">2 poin</span></div>
+<h3>Pada self-driving car, kamera, radar, lidar, dan GPS terutama berfungsi untuk…</h3><div class="qimage"><img src="images/03-self-driving-iot.svg" alt="Gambar pendukung"></div><div class="answers"><button class="answer" data-correct="false">A. Menghapus data</button><button class="answer" data-correct="true">B. Mengumpulkan informasi dari lingkungan</button><button class="answer" data-correct="false">C. Mencetak hasil</button><button class="answer" data-correct="false">D. Menyimpan file secara permanen</button></div><div class="feedback" aria-live="polite"></div>
+</article><article class="question objective" data-qid="12">
+<div class="qtop"><span class="qnum">#12</span><span class="qtopic">Self-Driving, IoT &amp; ML</span><span class="points">2 poin</span></div>
+<h3>Dalam alur self-driving, tahap ketika sistem memahami bahwa objek tertentu adalah kendaraan atau pejalan kaki disebut…</h3><div class="answers"><button class="answer" data-correct="false">A. Control</button><button class="answer" data-correct="true">B. Perception</button><button class="answer" data-correct="false">C. Output</button><button class="answer" data-correct="false">D. Storage</button></div><div class="feedback" aria-live="polite"></div>
+</article><article class="question objective" data-qid="13">
+<div class="qtop"><span class="qnum">#13</span><span class="qtopic">Self-Driving, IoT &amp; ML</span><span class="points">2 poin</span></div>
+<h3>Dalam tempat sampah pintar, kamera/sensor mengirim data benda yang terdeteksi ke sistem. Bagian ini paling berkaitan dengan…</h3><div class="answers"><button class="answer" data-correct="true">A. IoT</button><button class="answer" data-correct="false">B. Machine Learning</button><button class="answer" data-correct="false">C. Monitor</button><button class="answer" data-correct="false">D. Catu daya</button></div><div class="feedback" aria-live="polite"></div>
+</article><article class="question objective" data-qid="14">
+<div class="qtop"><span class="qnum">#14</span><span class="qtopic">Self-Driving, IoT &amp; ML</span><span class="points">2 poin</span></div>
+<h3>Dalam smart trash bin, proses “gambar botol dipelajari model lalu diklasifikasikan sebagai anorganik” paling tepat disebut…</h3><div class="answers"><button class="answer" data-correct="true">A. Machine Learning</button><button class="answer" data-correct="false">B. Catu daya</button><button class="answer" data-correct="false">C. Output monitor</button><button class="answer" data-correct="false">D. Kabel data saja</button></div><div class="feedback" aria-live="polite"></div>
+</article><article class="question objective" data-qid="15">
+<div class="qtop"><span class="qnum">#15</span><span class="qtopic">Self-Driving, IoT &amp; ML</span><span class="points">2 poin</span></div>
+<h3>Ketika self-driving car mendeteksi adanya mobil di depannya berhenti mendadak, mekanisme yang paling tepat adalah…</h3><div class="qimage"><img src="images/self-driving-sudden-stop.svg" alt="Gambar pendukung"></div><div class="answers"><button class="answer" data-correct="false">A. Control → Sensor → Perception → Decision</button><button class="answer" data-correct="true">B. Sensor → Perception → Decision → Control</button><button class="answer" data-correct="false">C. Decision → Sensor → Control → Perception</button><button class="answer" data-correct="false">D. Perception → Control → Sensor → Decision</button></div><div class="feedback" aria-live="polite"></div>
+</article><div class="section-nav"><button class="prevsec secondary">← Sebelumnya</button><button class="nextsec primary">Selanjutnya →</button></div></section><section id="sec-det" class="screen test-section"><div class="section-head"><span class="kicker">AI Detective</span><h2>AI Detective</h2><p>Jawab dengan teliti. Setiap soal mini game bernilai 2 poin.</p></div><article class="question objective" data-qid="16">
+<div class="qtop"><span class="qnum">#16</span><span class="qtopic">AI Detective</span><span class="points">2 poin</span></div>
+<h3>Sebuah gambar viral memiliki tangan yang tampak janggal. Kesimpulan paling tepat adalah…</h3><div class="qimage"><img src="images/ai-detective-evidence.svg" alt="Gambar pendukung"></div><div class="answers"><button class="answer" data-correct="false">A. Pasti AI</button><button class="answer" data-correct="false">B. Pasti hoaks</button><button class="answer" data-correct="true">C. Janggal menjadi sinyal untuk memeriksa lebih lanjut, bukan bukti mutlak</button><button class="answer" data-correct="false">D. Pasti benar</button></div><div class="feedback" aria-live="polite"></div>
+</article><article class="question objective" data-qid="17">
+<div class="qtop"><span class="qnum">#17</span><span class="qtopic">AI Detective</span><span class="points">2 poin</span></div>
+<h3>Saat memeriksa klaim pada sebuah gambar, pertanyaan yang paling tepat pada tahap konteks adalah…</h3><div class="answers"><button class="answer" data-correct="false">A. Berapa ukuran file?</button><button class="answer" data-correct="true">B. Siapa sumbernya, kapan dibuat, dan di mana kejadiannya?</button><button class="answer" data-correct="false">C. Apa warna favorit pembuatnya?</button><button class="answer" data-correct="false">D. Berapa resolusi layarnya?</button></div><div class="feedback" aria-live="polite"></div>
+</article><article class="question objective" data-qid="18">
+<div class="qtop"><span class="qnum">#18</span><span class="qtopic">AI Detective</span><span class="points">2 poin</span></div>
+<h3>Jika sebuah gambar terlihat meyakinkan tetapi belum ada sumber resmi atau sumber independen yang menguatkan klaimnya, label yang paling aman adalah…</h3><div class="answers"><button class="answer" data-correct="false">A. Pasti benar</button><button class="answer" data-correct="true">B. Belum terverifikasi</button><button class="answer" data-correct="false">C. Pasti AI</button><button class="answer" data-correct="false">D. Sudah terbukti hoaks</button></div><div class="feedback" aria-live="polite"></div>
+</article><article class="question objective" data-qid="19">
+<div class="qtop"><span class="qnum">#19</span><span class="qtopic">AI Detective</span><span class="points">2 poin</span></div>
+<h3>Pernyataan “Saya melihat bayangan pada gambar tidak konsisten” merupakan contoh…</h3><div class="answers"><button class="answer" data-correct="true">A. Fakta yang diamati</button><button class="answer" data-correct="false">B. Klaim tentang kejadian</button><button class="answer" data-correct="false">C. Kesimpulan pasti</button><button class="answer" data-correct="false">D. Sumber primer</button></div><div class="feedback" aria-live="polite"></div>
+</article><article class="question objective" data-qid="20">
+<div class="qtop"><span class="qnum">#20</span><span class="qtopic">AI Detective</span><span class="points">2 poin</span></div>
+<h3>Mengapa gambar asli pun tetap perlu diperiksa konteks dan sumbernya?</h3><div class="answers"><button class="answer" data-correct="false">A. Karena semua gambar adalah AI</button><button class="answer" data-correct="true">B. Karena gambar asli dapat digunakan dengan konteks atau klaim yang menyesatkan</button><button class="answer" data-correct="false">C. Karena gambar tidak pernah berguna</button><button class="answer" data-correct="false">D. Karena sumber tidak penting</button></div><div class="feedback" aria-live="polite"></div>
+</article><div class="section-nav"><button class="prevsec secondary">← Sebelumnya</button><button class="nextsec primary">Selanjutnya →</button></div></section><section id="sec-bps" class="screen test-section"><div class="section-head"><span class="kicker">Data BPS → Infografis</span><h2>Data BPS → Infografis</h2><p>Jawab dengan teliti. Setiap soal mini game bernilai 2 poin.</p></div><article class="question objective" data-qid="21">
+<div class="qtop"><span class="qnum">#21</span><span class="qtopic">Data BPS → Infografis</span><span class="points">2 poin</span></div>
+<h3>Sebelum memvisualisasikan data BPS, hal pertama yang perlu diperiksa adalah…</h3><div class="answers"><button class="answer" data-correct="false">A. Warna favorit pembuat</button><button class="answer" data-correct="true">B. Judul, variabel, definisi, satuan, wilayah, periode, dan sumber</button><button class="answer" data-correct="false">C. Nama file saja</button><button class="answer" data-correct="false">D. Ukuran layar</button></div><div class="feedback" aria-live="polite"></div>
+</article><article class="question objective" data-qid="22">
+<div class="qtop"><span class="qnum">#22</span><span class="qtopic">Data BPS → Infografis</span><span class="points">2 poin</span></div>
+<h3>Kamu ingin membandingkan jumlah penduduk beberapa kabupaten/kota pada satu tahun yang sama. Visualisasi yang paling sesuai untuk memulai adalah…</h3><div class="qimage"><img src="images/05-bps-infografis.svg" alt="Gambar pendukung"></div><div class="answers"><button class="answer" data-correct="true">A. Bar chart</button><button class="answer" data-correct="false">B. Flowchart</button><button class="answer" data-correct="false">C. Line chart untuk proses login</button><button class="answer" data-correct="false">D. Diagram alur</button></div><div class="feedback" aria-live="polite"></div>
+</article><article class="question objective" data-qid="23">
+<div class="qtop"><span class="qnum">#23</span><span class="qtopic">Data BPS → Infografis</span><span class="points">2 poin</span></div>
+<h3>Kamu ingin menunjukkan perubahan suatu indikator BPS dari tahun 2020 sampai 2025. Visualisasi yang lebih sesuai adalah…</h3><div class="answers"><button class="answer" data-correct="true">A. Line chart</button><button class="answer" data-correct="false">B. Flowchart</button><button class="answer" data-correct="false">C. Pie chart untuk semua proses</button><button class="answer" data-correct="false">D. Ikon AI</button></div><div class="feedback" aria-live="polite"></div>
+</article><article class="question objective" data-qid="24">
+<div class="qtop"><span class="qnum">#24</span><span class="qtopic">Data BPS → Infografis</span><span class="points">2 poin</span></div>
+<h3>Jika AI mengubah angka BPS agar grafik terlihat lebih rapi, tindakan yang paling tepat adalah…</h3><div class="answers"><button class="answer" data-correct="false">A. Tetap memakai angka baru</button><button class="answer" data-correct="false">B. Mengubah sumber</button><button class="answer" data-correct="true">C. Mengembalikan ke angka sumber dan memverifikasi ulang</button><button class="answer" data-correct="false">D. Menghapus satuan</button></div><div class="feedback" aria-live="polite"></div>
+</article><article class="question objective" data-qid="25">
+<div class="qtop"><span class="qnum">#25</span><span class="qtopic">Data BPS → Infografis</span><span class="points">2 poin</span></div>
+<h3>Alur kerja yang paling tepat untuk membuat infografis interaktif dengan bantuan AI adalah…</h3><div class="answers"><button class="answer" data-correct="true">A. Data BPS → pahami data → tentukan pesan → pilih visualisasi → gunakan AI → uji/verifikasi</button><button class="answer" data-correct="false">B. AI → ubah angka → publikasikan → cari sumber</button><button class="answer" data-correct="false">C. Buat desain → hapus data → simpulkan</button><button class="answer" data-correct="false">D. Pilih warna → AI menebak isi data → selesai</button></div><div class="feedback" aria-live="polite"></div>
+</article><div class="section-nav"><button class="prevsec secondary">← Sebelumnya</button><button class="nextsec primary">Selanjutnya →</button></div></section><section id="sec-prompt" class="screen test-section"><div class="section-head"><span class="kicker">One-Shot Prompt</span><h2>One-Shot Prompt</h2><p>Jawab dengan teliti. Setiap soal mini game bernilai 2 poin.</p></div><article class="question objective" data-qid="26">
+<div class="qtop"><span class="qnum">#26</span><span class="qtopic">One-Shot Prompt</span><span class="points">2 poin</span></div>
+<h3>Bagian prompt yang menjelaskan “siapa/apa yang harus muncul” adalah…</h3><div class="qimage"><img src="images/06-one-shot-prompt.svg" alt="Gambar pendukung"></div><div class="answers"><button class="answer" data-correct="true">A. Subjek</button><button class="answer" data-correct="false">B. Rasio</button><button class="answer" data-correct="false">C. Watermark</button><button class="answer" data-correct="false">D. Sumber</button></div><div class="feedback" aria-live="polite"></div>
+</article><article class="question objective" data-qid="27">
+<div class="qtop"><span class="qnum">#27</span><span class="qtopic">One-Shot Prompt</span><span class="points">2 poin</span></div>
+<h3>Perhatikan gambar AI berikut. Prompt mana yang paling sesuai untuk menghasilkan gambar tersebut?</h3><div class="qimage"><img src="images/one-shot-ai-classroom.png" alt="Gambar pendukung"></div><div class="answers"><button class="answer" data-correct="true">A. Kelas SMA sedang belajar AI di laboratorium komputer; siswa menggunakan komputer; guru menjelaskan AI di depan layar besar; sudut pandang dari belakang kelas; ilustrasi 3D realistis; cahaya siang dari jendela.</button><button class="answer" data-correct="false">B. Kelas SMA sedang belajar AI di laboratorium komputer; siswa menggunakan komputer; guru menjelaskan AI; sudut pandang dari depan kelas; ilustrasi 3D realistis.</button><button class="answer" data-correct="false">C. Kelas SMA sedang belajar olahraga di lapangan sekolah; siswa menggunakan laptop; gaya cat air.</button><button class="answer" data-correct="false">D. Pemandangan kota futuristik tanpa siswa, tanpa guru, dan tanpa komputer.</button></div><div class="feedback" aria-live="polite"></div>
+</article><article class="question objective" data-qid="28">
+<div class="qtop"><span class="qnum">#28</span><span class="qtopic">One-Shot Prompt</span><span class="points">2 poin</span></div>
+<h3>Sebuah gambar akan digunakan sebagai banner website dengan format lebar. Detail prompt yang penting ditambahkan adalah…</h3><div class="answers"><button class="answer" data-correct="true">A. Rasio/format output, misalnya 16:9</button><button class="answer" data-correct="false">B. Nomor absen siswa</button><button class="answer" data-correct="false">C. Nama hewan peliharaan</button><button class="answer" data-correct="false">D. Waktu lahir pembuat</button></div><div class="feedback" aria-live="polite"></div>
+</article><article class="question objective" data-qid="29">
+<div class="qtop"><span class="qnum">#29</span><span class="qtopic">One-Shot Prompt</span><span class="points">2 poin</span></div>
+<h3>Jika kamu tidak ingin gambar berisi tulisan atau watermark, bagian prompt yang tepat adalah…</h3><div class="answers"><button class="answer" data-correct="true">A. Batasan/negative instruction</button><button class="answer" data-correct="false">B. Input sensor</button><button class="answer" data-correct="false">C. Flowchart</button><button class="answer" data-correct="false">D. Data BPS</button></div><div class="feedback" aria-live="polite"></div>
+</article><article class="question objective" data-qid="30">
+<div class="qtop"><span class="qnum">#30</span><span class="qtopic">One-Shot Prompt</span><span class="points">2 poin</span></div>
+<h3>Tujuan utama One-Shot Prompt Challenge adalah…</h3><div class="answers"><button class="answer" data-correct="false">A. Membuat prompt paling panjang</button><button class="answer" data-correct="true">B. Menyusun instruksi yang jelas dan lengkap sebelum generasi pertama</button><button class="answer" data-correct="false">C. Mengulang prompt sampai berhasil</button><button class="answer" data-correct="false">D. Menghapus semua detail</button></div><div class="feedback" aria-live="polite"></div>
+</article><div class="section-nav"><button class="prevsec secondary">← Sebelumnya</button><button class="nextsec primary">Selanjutnya →</button></div></section>
+<section id="sec-short" class="screen test-section"><div class="section-head"><span class="kicker">ESSAY SINGKAT</span><h2>10 Soal Essay Singkat</h2><p>Jawab ringkas tetapi tetap menunjukkan pemahaman konsep.</p></div><article class="question essay short" data-essay="short-1"><div class="qtop"><span class="qnum">ES-1</span><span class="qtopic">Essay Singkat</span><span class="points">2 poin</span></div><h3>Jelaskan dengan kata-katamu sendiri perbedaan algoritma dan flowchart.</h3><textarea placeholder="Tulis jawaban singkat dan jelas..."></textarea></article><article class="question essay short" data-essay="short-2"><div class="qtop"><span class="qnum">ES-2</span><span class="qtopic">Essay Singkat</span><span class="points">2 poin</span></div><h3>Berikan satu contoh masalah yang cocok diselesaikan dengan struktur selection dan jelaskan kondisinya.</h3><textarea placeholder="Tulis jawaban singkat dan jelas..."></textarea></article><article class="question essay short" data-essay="short-3"><div class="qtop"><span class="qnum">ES-3</span><span class="qtopic">Essay Singkat</span><span class="points">2 poin</span></div><h3>Sebutkan dua contoh penggunaan AI dalam kehidupan sehari-hari dan jelaskan fungsi AI pada masing-masing contoh.</h3><textarea placeholder="Tulis jawaban singkat dan jelas..."></textarea></article><article class="question essay short" data-essay="short-4"><div class="qtop"><span class="qnum">ES-4</span><span class="qtopic">Essay Singkat</span><span class="points">2 poin</span></div><h3>Jelaskan perbedaan sederhana antara IoT dan machine learning.</h3><textarea placeholder="Tulis jawaban singkat dan jelas..."></textarea></article><article class="question essay short" data-essay="short-5"><div class="qtop"><span class="qnum">ES-5</span><span class="qtopic">Essay Singkat</span><span class="points">2 poin</span></div><h3>Jelaskan secara ringkas apa yang terjadi ketika self-driving car mendeteksi mobil di depannya berhenti mendadak.</h3><textarea placeholder="Tulis jawaban singkat dan jelas..."></textarea></article><article class="question essay short" data-essay="short-6"><div class="qtop"><span class="qnum">ES-6</span><span class="qtopic">Essay Singkat</span><span class="points">2 poin</span></div><h3>Sebutkan tiga hal yang perlu diperiksa ketika kamu menemukan gambar atau informasi yang diduga dibuat AI.</h3><textarea placeholder="Tulis jawaban singkat dan jelas..."></textarea></article><article class="question essay short" data-essay="short-7"><div class="qtop"><span class="qnum">ES-7</span><span class="qtopic">Essay Singkat</span><span class="points">2 poin</span></div><h3>Jelaskan perbedaan antara fakta yang terlihat pada gambar dan klaim yang dibuat tentang gambar tersebut.</h3><textarea placeholder="Tulis jawaban singkat dan jelas..."></textarea></article><article class="question essay short" data-essay="short-8"><div class="qtop"><span class="qnum">ES-8</span><span class="qtopic">Essay Singkat</span><span class="points">2 poin</span></div><h3>Sebutkan langkah utama untuk mengubah data BPS menjadi infografis interaktif dengan bantuan ChatGPT.</h3><textarea placeholder="Tulis jawaban singkat dan jelas..."></textarea></article><article class="question essay short" data-essay="short-9"><div class="qtop"><span class="qnum">ES-9</span><span class="qtopic">Essay Singkat</span><span class="points">2 poin</span></div><h3>Sebutkan minimal lima unsur penting yang dapat dimasukkan ke dalam one-shot prompt untuk menghasilkan gambar.</h3><textarea placeholder="Tulis jawaban singkat dan jelas..."></textarea></article><article class="question essay short" data-essay="short-10"><div class="qtop"><span class="qnum">ES-10</span><span class="qtopic">Essay Singkat</span><span class="points">2 poin</span></div><h3>Mengapa hasil AI tetap perlu diperiksa dan tidak boleh langsung dianggap benar?</h3><textarea placeholder="Tulis jawaban singkat dan jelas..."></textarea></article><div class="section-nav"><button class="prevsec secondary">← Sebelumnya</button><button class="nextsec primary">Selanjutnya →</button></div></section>
+<section id="sec-long" class="screen test-section"><div class="section-head"><span class="kicker">URAIAN PANJANG</span><h2>5 Soal Uraian</h2><p>Gunakan penjelasan yang runtut dan kaitkan dengan konsep yang dipelajari.</p></div><article class="question essay long" data-essay="long-1"><div class="qtop"><span class="qnum">UR-1</span><span class="qtopic">Uraian Panjang</span><span class="points">4 poin</span></div><h3>Rancang sebuah algoritma dan jelaskan flowchart untuk menentukan apakah seorang siswa layak mengikuti ujian berdasarkan dua syarat: kehadiran minimal 80% dan nilai tugas minimal 75%. Jelaskan urutan proses dan keputusan yang terjadi.</h3><textarea placeholder="Tulis jawaban secara runtut dan gunakan konsep Informatika yang tepat..."></textarea></article><article class="question essay long" data-essay="long-2"><div class="qtop"><span class="qnum">UR-2</span><span class="qtopic">Uraian Panjang</span><span class="points">4 poin</span></div><h3>Jelaskan bagaimana AI digunakan dalam kehidupan sehari-hari. Pilih minimal tiga contoh, kemudian analisis data apa yang mungkin digunakan, keluaran yang dihasilkan, manfaat, dan satu risiko atau keterbatasan dari penggunaan AI tersebut.</h3><textarea placeholder="Tulis jawaban secara runtut dan gunakan konsep Informatika yang tepat..."></textarea></article><article class="question essay long" data-essay="long-3"><div class="qtop"><span class="qnum">UR-3</span><span class="qtopic">Uraian Panjang</span><span class="points">4 poin</span></div><h3>Jelaskan secara runtut bagaimana self-driving car dapat merespons ketika kendaraan di depannya berhenti mendadak. Hubungkan peran sensor, perception, decision, control, serta jelaskan bagaimana machine learning dan IoT dapat terkait pada sistem tersebut.</h3><textarea placeholder="Tulis jawaban secara runtut dan gunakan konsep Informatika yang tepat..."></textarea></article><article class="question essay long" data-essay="long-4"><div class="qtop"><span class="qnum">UR-4</span><span class="qtopic">Uraian Panjang</span><span class="points">4 poin</span></div><h3>Bayangkan kamu menemukan gambar viral yang diklaim menunjukkan sebuah peristiwa penting. Jelaskan langkah investigasi yang akan kamu lakukan untuk menentukan apakah informasi tersebut benar, belum terverifikasi, atau menyesatkan. Bedakan antara bukti visual, konteks, sumber, klaim, dan kesimpulan.</h3><textarea placeholder="Tulis jawaban secara runtut dan gunakan konsep Informatika yang tepat..."></textarea></article><article class="question essay long" data-essay="long-5"><div class="qtop"><span class="qnum">UR-5</span><span class="qtopic">Uraian Panjang</span><span class="points">4 poin</span></div><h3>Buat rancangan proyek mengubah satu dataset BPS menjadi infografis interaktif menggunakan ChatGPT. Jelaskan bagaimana kamu memahami data, menentukan pesan utama, memilih jenis visualisasi, menyusun prompt untuk ChatGPT, memeriksa angka, dan memastikan hasil akhir tidak menyesatkan.</h3><textarea placeholder="Tulis jawaban secara runtut dan gunakan konsep Informatika yang tepat..."></textarea></article><div class="section-nav"><button class="prevsec secondary">← Sebelumnya</button><button class="nextsec primary">Selanjutnya →</button></div></section>
+<section id="sec-result" class="screen"><div class="section-head"><span class="kicker">HASIL</span><h2>Hasil Ulangan</h2><p>Nilai objektif dihitung otomatis. Essay dan uraian tetap memerlukan penilaian guru.</p></div>
+<div class="resultbox"><div class="print-summary" id="printSummary"></div><div style="color:var(--muted);font-weight:800">Peserta</div><h3 id="resultName" style="font-size:24px;margin:4px 0">—</h3>
+<div class="scorebig" id="objScore">0 / 60</div><div class="progressbar"><div class="progressfill" id="objFill"></div></div>
+<div class="scoregrid"><div class="scorecard"><div>Mini Game (benar)</div><strong id="resultObj">0 / 30</strong><div class="mini-answer-count" id="resultObjAnswered">0 / 30 terjawab</div></div><div class="scorecard"><div>Essay Singkat</div><strong id="resultShort">0 / 10 terisi</strong></div><div class="scorecard"><div>Uraian Panjang</div><strong id="resultLong">0 / 5 terisi</strong></div></div>
+<div class="call"><b>Skor maksimal:</b> 100 poin = 60 poin mini game + 20 poin essay singkat + 20 poin uraian panjang. Nilai akhir ditetapkan setelah guru memberi skor pada jawaban essay/uraian.</div>
+<div class="section-nav" style="margin-top:18px"><button class="secondary" id="saveBtn">💾 Simpan Sementara</button><button class="primary" id="printBtn">🖨️ Cetak Jawaban</button></div></div></section>
+</main></div>
+<div class="stickyActions"><div class="actionsIn"><div class="status" id="status">Belum dimulai</div><button class="secondary" id="saveBottom">💾 Simpan Sementara</button><button class="finishbtn" id="finishBtn">✅ Selesaikan & Lihat Hasil</button></div></div>
+
+<script>
+const STUDENTS = ["ABDUL KARIM", "AFIDA FAIRUS FATIN", "AGUNG SETIAWAN", "AILSA AGRA MAYCHANA", "ANASTASIA VIERA GERNADI", "ARDIAN CAHYO SAPUTRO", "AULIA NUGRAHENI ASOKA CINTA", "AYUDHYA PUTRI GIOVERRY", "BINTANG", "DELA ALVIAH PRIANA NABILA", "DIMAS FIRTA SANTAYA", "DZIKRI DWI ANGGAKARA", "ELSA SETYOWATI", "FAISAL UMAR MANDALA", "FARDAN ARDHIONA YUDHATAMA", "IBNU ARIEF IKHSAN", "ILHAM MANDALATAMA WIBOWO", "INDRA SYAH PUTRA", "INDRIANA VALIN", "KIRANA KARUNIA PUTRI", "LUQMAN HAKIM", "MARSHA DWI SAFITRI", "MICHELP YONERI", "MOHAMAD FAJAR PRATAMA", "MUHAMAD RENDRA HARIYANTO", "NAUFAL ASYRAF RIZQULLAH", "NAZWA RIMA PUTRI", "PRADIGTA AULIA HAYUNINGTYAS", "RAVADITYA ISMAWAN", "SALSA NURUL FATIMAH", "SANDY FEBRI SETIAWAN", "SHAKILLA RAHMADHANI PUTRI", "TEGAR ANGGARA SUSILO", "VIKO REVALINO ARDYANZAH", "ZAHRO NUR HANIFAH", "ZULFA LAILA"];
+const navBtns=[...document.querySelectorAll('.navitem')], screens=[...document.querySelectorAll('.screen')];
+let started=false, score=0;
+const storageKey='ulangan_harian_informatika_xii_v1';
+
+function show(id){
+  if(!started && id!=='sec-welcome') return;
+  screens.forEach(s=>s.classList.toggle('active',s.id===id));
+  navBtns.forEach(b=>b.classList.toggle('active',b.dataset.target===id));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+navBtns.forEach(b=>b.addEventListener('click',()=>show(b.dataset.target)));
+
+function updateStart(){
+  const val=document.getElementById('studentSelect').value;
+  const idx=STUDENTS.indexOf(val);
+  document.getElementById('studentNumber').value=idx>=0?String(idx+1):'';
+  document.getElementById('startBtn').disabled=!val;
+}
+document.getElementById('studentSelect').addEventListener('change',updateStart);
+
+function essayCounts(){
+  let s=0,l=0;
+  document.querySelectorAll('.short textarea').forEach(t=>{if(t.value.trim())s++;});
+  document.querySelectorAll('.long textarea').forEach(t=>{if(t.value.trim())l++;});
+  return {s,l};
+}
+function updateStatus(){
+  const objAnswered=document.querySelectorAll('.objective .answer.selected').length;
+  const essays=essayCounts();
+  const done=objAnswered + essays.s + essays.l;
+  document.getElementById('status').textContent=started?`Terjawab ${done} / 45`:'Belum dimulai';
+  const answeredEl=document.getElementById('resultObjAnswered');
+  if(answeredEl) answeredEl.textContent=`${objAnswered} / 30 terjawab`;
+}
+
+document.querySelectorAll('.objective').forEach(card=>{
+  const answers=card.querySelectorAll('.answer');
+  answers.forEach(btn=>btn.addEventListener('click',()=>{
+    if(!started || card.classList.contains('locked')) return;
+    answers.forEach(a=>a.classList.remove('selected'));
+    btn.classList.add('selected');
+    card.classList.add('locked');
+    answers.forEach(a=>{a.disabled=true;a.classList.add('locked');});
+    if(btn.dataset.correct==='true') score++;
+    updateStatus();
+  }));
+});
+
+document.querySelectorAll('textarea').forEach(t=>t.addEventListener('input',updateStatus));
+
+document.getElementById('startBtn').addEventListener('click',()=>{
+  const val=document.getElementById('studentSelect').value;
+  if(!val)return;
+  checkServerSubmission(val);
+  started=true;
+  document.getElementById('studentSelect').disabled=true;
+  document.getElementById('editIdentityBtn').classList.remove('hidden');
+  document.getElementById('startBtn').classList.add('hidden');
+  document.getElementById('resultName').textContent=val;
+  show('sec-alg'); updateStatus(); saveDraft(false);
+});
+
+function resetForIdentityChange(){
+  const ok=confirm('Mengubah nama peserta akan menghapus jawaban yang sedang dikerjakan pada perangkat ini. Lanjutkan?');
+  if(!ok)return;
+  localStorage.removeItem(storageKey);
+  started=false;
+  score=0;
+  serverBusy=false;
+  serverSubmitted=false;
+  document.getElementById('studentSelect').disabled=false;
+  document.getElementById('studentSelect').value='';
+  document.getElementById('studentNumber').value='';
+  document.getElementById('editIdentityBtn').classList.add('hidden');
+  document.getElementById('startBtn').classList.remove('hidden');
+  document.getElementById('startBtn').disabled=true;
+  document.querySelectorAll('.objective').forEach(card=>{
+    card.classList.remove('locked');
+    card.querySelectorAll('.answer').forEach(a=>{a.disabled=false;a.classList.remove('locked','selected');});
+  });
+  document.querySelectorAll('textarea').forEach(t=>t.value='');
+  document.getElementById('resultName').textContent='—';
+  updateStatus();
+  show('sec-welcome');
+}
+document.getElementById('editIdentityBtn').addEventListener('click',resetForIdentityChange);
+
+const order=['sec-alg','sec-ai','sec-self','sec-det','sec-bps','sec-prompt','sec-short','sec-long','sec-result'];
+function stepSection(delta){
+  const cur=document.querySelector('.screen.active')?.id||'sec-welcome';
+  let i=order.indexOf(cur); if(i<0)i=0;
+  show(order[Math.max(0,Math.min(order.length-1,i+delta))]);
+}
+document.querySelectorAll('.nextsec').forEach(b=>b.addEventListener('click',()=>stepSection(1)));
+document.querySelectorAll('.prevsec').forEach(b=>b.addEventListener('click',()=>stepSection(-1)));
+
+function saveDraft(showMsg=true){
+  const data={name:document.getElementById('studentSelect').value,score,started,answers:{},essays:{}};
+  document.querySelectorAll('.objective').forEach(card=>{
+    const sel=card.querySelector('.answer.selected');
+    if(sel) data.answers[card.dataset.qid]=sel.textContent;
+  });
+  document.querySelectorAll('.essay').forEach(card=>{
+    data.essays[card.dataset.essay]=card.querySelector('textarea').value;
+  });
+  localStorage.setItem(storageKey,JSON.stringify(data));
+  if(showMsg) document.getElementById('status').textContent='Tersimpan sementara ✓';
+}
+function loadDraft(){
+  try{
+    const raw=localStorage.getItem(storageKey); if(!raw)return;
+    const data=JSON.parse(raw); if(!data.name)return;
+    document.getElementById('studentSelect').value=data.name; updateStart();
+    document.getElementById('studentSelect').disabled=true;
+    document.getElementById('editIdentityBtn').classList.remove('hidden');
+    document.getElementById('startBtn').classList.add('hidden');
+    started=true; score=0;
+    Object.entries(data.answers||{}).forEach(([qid,text])=>{
+      const card=document.querySelector(`.objective[data-qid="${qid}"]`); if(!card)return;
+      const a=[...card.querySelectorAll('.answer')].find(x=>x.textContent===text);
+      if(a)a.click();
+    });
+    Object.entries(data.essays||{}).forEach(([id,val])=>{
+      const card=document.querySelector(`.essay[data-essay="${id}"]`); if(card)card.querySelector('textarea').value=val;
+    });
+    document.getElementById('resultName').textContent=data.name;
+    updateStatus();
+  }catch(e){}
+}
+document.getElementById('saveBottom').addEventListener('click',()=>saveDraft(true));
+document.getElementById('saveBtn').addEventListener('click',()=>saveDraft(true));
+
+document.getElementById('finishBtn').addEventListener('click',()=>{
+  if(!started || serverBusy || serverSubmitted)return;
+  const objAnswered=document.querySelectorAll('.objective .answer.selected').length;
+  const e=essayCounts();
+  if(objAnswered<30 || e.s<10 || e.l<5){
+    const ok=confirm(`Belum semua bagian selesai.\n\nMini Game: ${objAnswered}/30\nEssay Singkat: ${e.s}/10\nUraian Panjang: ${e.l}/5\n\nTetap kirim hasil sekarang?`);
+    if(!ok)return;
+  }
+  submitToAppsScript();
+});
+function preparePrintView(){
+  const name=document.getElementById('studentSelect').value || '—';
+  const objAnswered=document.querySelectorAll('.objective .answer.selected').length;
+  const essays=essayCounts();
+  const scoreText=document.getElementById('objScore').textContent;
+  const summary=document.getElementById('printSummary');
+  if(summary){
+    summary.innerHTML=`<b>Ulangan Harian Informatika XII Fase F</b><br>
+    Peserta: <b>${name}</b><br>
+    Mini Game: <b>${objAnswered} / 30 terjawab</b> — skor benar <b>${scoreText}</b><br>
+    Essay Singkat: <b>${essays.s} / 10 terisi</b> &nbsp; | &nbsp;
+    Uraian Panjang: <b>${essays.l} / 5 terisi</b>`;
+  }
+}
+document.getElementById('printBtn').addEventListener('click',()=>{
+  preparePrintView();
+  document.body.classList.add('print-mode');
+  // Give the browser one frame so the print layout is fully applied.
+  requestAnimationFrame(()=>window.print());
+});
+window.addEventListener('afterprint',()=>document.body.classList.remove('print-mode'));
+
+loadDraft(); updateStatus();
+</script>
+
+<script id="back-reading-script">
+(function(){
+  const btn=document.getElementById('backReading');
+  if(!btn)return;
+  btn.addEventListener('click',()=>{
+    window.location.href="../index.html";
+  });
+})();
+
+/* ===== GitHub Pages + Google Apps Script Web App =====
+   GitHub hosts the static frontend.
+   Apps Script acts as the backend API.
+   Do NOT use google.script.run here.
+*/
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw4WLwkX1SSnHcwai3lFgMlrXp9QVPhl8QV80R05KsGTxeDYBV-33rV_dNTVcvaL7kIJw/exec';
+let serverSubmitted = false;
+let serverBusy = false;
+let currentSubmissionId = '';
+
+function apiConfigured(){
+  return APPS_SCRIPT_URL && !APPS_SCRIPT_URL.includes('PASTE_APPS_SCRIPT_WEB_APP_URL_DI_SINI');
+}
+
+function jsonpRequest(params,onSuccess,onError){
+  if(!apiConfigured()){
+    if(onError) onError(new Error('APPS_SCRIPT_URL belum diisi.'));
+    return;
+  }
+  const callbackName='cb_'+Date.now()+'_'+Math.floor(Math.random()*100000);
+  const script=document.createElement('script');
+  const query=new URLSearchParams(Object.assign({},params,{callback:callbackName}));
+  const cleanup=()=>{
+    try{delete window[callbackName];}catch(e){}
+    script.remove();
+  };
+  window[callbackName]=(data)=>{cleanup(); if(onSuccess) onSuccess(data);};
+  script.onerror=()=>{cleanup(); if(onError) onError(new Error('Tidak dapat terhubung ke Apps Script Web App.'));};
+  script.src=APPS_SCRIPT_URL + (APPS_SCRIPT_URL.includes('?')?'&':'?') + query.toString();
+  document.body.appendChild(script);
+}
+
+function checkServerSubmission(name){
+  if(!apiConfigured()) return;
+  jsonpRequest(
+    {action:'check',name:name},
+    res=>{
+      if(res && res.submitted){
+        document.getElementById('startBtn').disabled=true;
+        alert('⚠️ Ulangan untuk nama ini sudah pernah dikirim. Silakan gunakan nama peserta yang belum mengirim.');
+      }
+    },
+    err=>console.warn(err)
+  );
+}
+
+function buildSubmissionPayload(){
+  const objective=[];
+  document.querySelectorAll('.objective').forEach(card=>{
+    const selected=card.querySelector('.answer.selected');
+    if(!selected) return;
+    const buttons=[...card.querySelectorAll('.answer')];
+    objective.push({
+      qid:Number(card.dataset.qid),
+      selectedIndex:buttons.indexOf(selected),
+      options:buttons.map(b=>b.textContent.replace(/^[A-D]\.\s*/,''))
+    });
+  });
+  const essays=[];
+  document.querySelectorAll('.essay').forEach(card=>{
+    const textarea=card.querySelector('textarea');
+    essays.push({
+      qid:card.dataset.essay || '',
+      type:card.classList.contains('short')?'Essay Singkat':'Uraian Panjang',
+      answer:textarea ? textarea.value : ''
+    });
+  });
+  currentSubmissionId='UH-'+Date.now()+'-'+Math.random().toString(36).slice(2,10);
+  return {submissionId:currentSubmissionId,name:document.getElementById('studentSelect').value,objective:objective,essays:essays};
+}
+
+function postToAppsScript(payload){
+  const form=document.createElement('form');
+  form.method='POST';
+  form.action=APPS_SCRIPT_URL;
+  form.target='submitFrame';
+  form.style.display='none';
+  const field=document.createElement('input');
+  field.type='hidden';
+  field.name='payload';
+  field.value=JSON.stringify(payload);
+  form.appendChild(field);
+  document.body.appendChild(form);
+  form.submit();
+  setTimeout(()=>form.remove(),2000);
+}
+
+function pollSubmissionStatus(attempt){
+  attempt = attempt || 0;
+  if(attempt>20){
+    serverBusy=false;
+    alert('⚠️ Hasil belum dapat dikonfirmasi dari Google Sheets. Periksa URL Apps Script dan koneksi internet.');
+    const finishBtn=document.getElementById('finishBtn');
+    const saveBottom=document.getElementById('saveBottom');
+    if(finishBtn){finishBtn.disabled=false;finishBtn.textContent='✅ Selesaikan & Kirim Hasil';}
+    if(saveBottom) saveBottom.disabled=false;
+    return;
+  }
+  jsonpRequest(
+    {action:'status',submissionId:currentSubmissionId},
+    res=>{
+      if(res && res.saved){
+        serverBusy=false;
+        serverSubmitted=true;
+        const finishBtn=document.getElementById('finishBtn');
+        const saveBottom=document.getElementById('saveBottom');
+        if(finishBtn){finishBtn.disabled=true;finishBtn.textContent='✅ Hasil Sudah Terkirim';}
+        if(saveBottom) saveBottom.disabled=true;
+        showResultFromServer(res);
+        saveDraft(false);
+        showServerToast('✅ Hasil berhasil disimpan ke Google Sheets.',true);
+      }else{
+        setTimeout(()=>pollSubmissionStatus(attempt+1),700);
+      }
+    },
+    ()=>setTimeout(()=>pollSubmissionStatus(attempt+1),900)
+  );
+}
+
+function submitToAppsScript(){
+  if(serverBusy || serverSubmitted) return;
+  if(!apiConfigured()){
+    alert('⚠️ APPS_SCRIPT_URL belum diatur. Isi URL Web App Apps Script sebelum mengunggah ke GitHub.');
+    return;
+  }
+  serverBusy=true;
+  const finishBtn=document.getElementById('finishBtn');
+  const saveBottom=document.getElementById('saveBottom');
+  if(finishBtn){finishBtn.disabled=true;finishBtn.textContent='⏳ Mengirim hasil...';}
+  if(saveBottom) saveBottom.disabled=true;
+  const payload=buildSubmissionPayload();
+  postToAppsScript(payload);
+  setTimeout(()=>pollSubmissionStatus(0),1200);
+}
+
+function showResultFromServer(res){
+  document.getElementById('resultName').textContent=res.name || document.getElementById('studentSelect').value;
+  document.getElementById('objScore').textContent=`${res.score||0} / 60`;
+  document.getElementById('objFill').style.width=((res.correctCount||0)/30*100)+'%';
+  document.getElementById('resultObj').textContent=`${res.correctCount||0} / 30`;
+  const ansEl=document.getElementById('resultObjAnswered');
+  if(ansEl) ansEl.textContent=`${res.answeredCount||0} / 30 terjawab`;
+  document.getElementById('resultShort').textContent=`${res.shortCount||0} / 10 terisi`;
+  document.getElementById('resultLong').textContent=`${res.longCount||0} / 5 terisi`;
+  show('sec-result');
+}
+
+</script>
+
+<iframe id="submitFrame" name="submitFrame" style="display:none;width:0;height:0;border:0"></iframe>
+</body>
+</html>
