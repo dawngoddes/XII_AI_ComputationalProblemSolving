@@ -1,0 +1,50 @@
+URUTAN SETUP
+
+A. GOOGLE SHEETS
+1. Buat Google Sheet baru.
+2. Salin Spreadsheet ID dari URL.
+
+B. APPS SCRIPT
+1. Google Sheet -> Extensions -> Apps Script.
+2. Paste `03_APPSCRIPT_GITHUB/Code.gs`.
+3. Ubah `SPREADSHEET_ID`.
+4. Run `setupSheets()` satu kali.
+5. Deploy -> New deployment -> Web app.
+6. Execute as: Me.
+7. Access: Anyone (agar GitHub Pages dapat mengirim hasil tanpa login, bila opsi ini tersedia pada akun/organisasi Anda).
+8. Salin URL `/exec`.
+
+C. HUBUNGKAN UH DENGAN APPS SCRIPT
+Buka:
+02_Ulangan_Harian/Ulangan_Harian_Informatika_XII_FaseF.html
+
+Cari:
+const APPS_SCRIPT_URL = 'URL Web App sudah tertanam di file UH';
+
+Ganti dengan URL `/exec`.
+
+D. GITHUB
+Upload SELURUH ISI FOLDER ini ke ROOT repository:
+index.html
+images/
+02_Ulangan_Harian/
+03_APPSCRIPT_GITHUB/
+.nojekyll
+
+E. GITHUB PAGES
+Settings -> Pages
+Source -> Deploy from a branch
+Branch -> main
+Folder -> / (root)
+Save
+
+Setelah deploy, buka URL GitHub Pages.
+Dari halaman tersebut:
+Bahan Bacaan -> tombol `Ulangan Harian` -> UH.
+
+Untuk kembali:
+UH -> `Kembali ke Materi` -> index.html.
+
+Catatan:
+- Jangan upload ZIP sebagai satu file dan berharap GitHub Pages menjalankannya.
+- Yang di-upload adalah ISI folder hasil extract.
